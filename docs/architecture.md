@@ -1,161 +1,140 @@
 # Repository architecture
 
-## Design goals
+This document defines the canonical component model for AlexOS. Directory
+READMEs index their contents; they do not redefine these boundaries.
 
-AlexOS must remain understandable to humans, consumable by different agents,
-and maintainable when it contains hundreds of documents. Its architecture
-therefore optimizes for:
+## Design constraints
 
-- clear ownership of every idea;
-- selective loading instead of one enormous instruction file;
-- minimal coupling between durable rules and volatile facts;
-- ordinary Markdown and relative links;
-- expansion without empty taxonomy or duplicated content;
-- change review using the same discipline as a software project.
+AlexOS must remain useful across programming languages, repository sizes, and
+agent products. Its structure therefore favors stable responsibilities,
+one-way dependencies, selective loading, and ordinary files that remain
+readable without proprietary tooling.
 
-## Layer model
+The framework stores reusable engineering guidance only. User profiles,
+project facts, organization rules, runtime state, and specialized technologies
+have different owners and release cycles. Keeping them in core would turn a
+framework into one installation's configuration.
 
-AlexOS uses five active layers.
+## Content layers
 
-### 1. Kernel
+### Kernel
 
-The kernel contains the smallest set of universal operating semantics: mission,
-reasoning principles, and the execution cycle. It answers, "How does an
-engineering agent behave regardless of the current task?"
+The kernel defines behavior expected in every engineering task: mission,
+epistemic discipline, decision rules, execution lifecycle, and conflict
+handling. It is small enough to load as a unit.
 
-The kernel may depend on nothing else. It can point readers toward policies or
-playbooks, but its meaning must remain valid when no project context is loaded.
-See [`../kernel/README.md`](../kernel/README.md).
+The kernel has no semantic dependency on another content layer. A kernel
+document may use ordinary engineering terms, but another layer must not be
+required to interpret its requirements.
 
-### 2. Policies
+### Policies
 
-Policies express cross-cutting constraints and quality bars. They answer, "What
-must remain true across multiple kinds of work?" A policy can refine a kernel
-principle but should not prescribe a long task sequence.
+Policies are mandatory constraints shared by multiple tasks. A policy narrows
+acceptable action without prescribing a full workflow. Policies depend on the
+kernel.
 
-Policies may depend on the kernel. They must not depend on a specific person,
-project, or agent vendor. See [`../policies/README.md`](../policies/README.md).
+### Knowledge
 
-### 3. Playbooks
+Knowledge contains durable descriptive models. It explains systems and risks
+without requiring an action. Knowledge has no dependency on policies,
+heuristics, or playbooks.
 
-Playbooks are executable procedures selected because a situation has occurred.
-They answer, "What sequence helps reach a verifiable outcome for this class of
-task?"
+### Heuristics
 
-Playbooks may reference the kernel and policies. They may name context fields an
-agent should look for, but they must still make sense when a particular context
-overlay is absent. See [`../playbooks/README.md`](../playbooks/README.md).
+Heuristics are conditional shortcuts for directing attention or choosing an
+investigation order. They are explicitly fallible and must state applicability
+and limits. Heuristics may use knowledge models but cannot create policy.
 
-### 4. Context
+### Playbooks
 
-Context contains facts and preferences that change independently from the
-operating model. It answers, "What is true about the person, environment, or
-project involved in this run?"
+Playbooks are procedures selected by a recognizable trigger. They define an
+outcome, inputs, method, completion evidence, and failure modes. Playbooks may
+compose the kernel, policies, knowledge, and heuristics.
 
-Context can narrow or configure a playbook, but it cannot weaken the kernel or
-policies. Conflicts are resolved in favor of the more stable layer unless a
-human explicitly authorizes an exception. See
-[`../context/README.md`](../context/README.md).
+### System documentation
 
-### 5. System documentation
-
-`docs/` governs AlexOS as a repository. It defines boundaries, document
-contracts, and evolution rules. It is read by maintainers, not loaded by
-default for ordinary engineering tasks.
+`docs/` governs AlexOS as a repository: architecture, content contracts,
+information lifecycle, and evolution. It is maintenance documentation, not an
+execution layer.
 
 ## Dependency direction
 
-Dependencies should point from volatile or specialized material toward stable,
-general material:
-
 ```text
-context ─────┐
-             ├──> playbooks ───> policies ───> kernel
-specialized ─┘
+playbooks ──> policies ──> kernel
+    │
+    ├───────> heuristics ──> knowledge
+    └──────────────────────> knowledge
 
-docs governs the structure; it is not an execution dependency.
+docs governs the graph but is not loaded for ordinary tasks.
 ```
 
-Avoid reverse dependencies. In particular, the kernel must not know about Alex,
-M5, Windows, Kubernetes, or a named coding agent. A project context may say
-which playbooks are common, but a playbook must not embed that project's facts.
+Dependencies in the reverse direction are prohibited. In particular:
+
+- the kernel cannot require a policy, playbook, heuristic, or knowledge file;
+- knowledge and heuristics cannot require the playbooks that consume them;
+- policies cannot depend on task procedures;
+- core content cannot depend on an external project or adapter.
+
+Navigation links are not automatically semantic dependencies. A link becomes a
+dependency when the target defines meaning or requirements needed by the
+source.
 
 ## Placement decision
 
-Classify a proposed document using the first matching question:
+Classify new material by its single canonical responsibility:
 
-1. Does it govern the AlexOS repository? Put it in `docs/`.
-2. Is it an invariant behavior required for almost every task? Put it in
-   `kernel/`, after proving the kernel needs to grow.
-3. Is it a rule that constrains many different workflows? Put it in `policies/`.
-4. Is it a repeatable response to a recognizable trigger with an outcome? Put
-   it in `playbooks/`.
-5. Is it a replaceable fact or preference about a person, environment, or
-   project? Put it in the matching `context/` namespace.
-6. Is it durable explanatory knowledge rather than an instruction? Introduce or
-   use `knowledge/` as described below.
-7. If none applies, reconsider whether the material belongs in AlexOS.
+1. Universal behavior belongs in `kernel/`.
+2. A mandatory cross-cutting constraint belongs in `policies/`.
+3. A durable explanatory model belongs in `knowledge/`.
+4. Conditional guidance with known limits belongs in `heuristics/`.
+5. A triggered procedure with a verifiable outcome belongs in `playbooks/`.
+6. Governance of AlexOS belongs in `docs/`.
+7. Installation-specific material remains external.
 
-When one document would answer several questions, split it at the boundary and
-link the pieces. Do not solve ambiguity by copying the same rule into multiple
-layers.
+If one document matches multiple categories, it contains multiple
+responsibilities. Split it at the boundary and link from the consumer to the
+dependency.
 
-## Loading model
+## External composition
 
-An integration should start at the root [`README.md`](../README.md), then load:
+AlexOS composes with three external sources.
 
-1. all kernel documents, because the kernel is intentionally small;
-2. policies relevant to the risk and artifact being changed;
-3. context selected by the active person, environment, and project;
-4. one primary playbook, plus only directly referenced supporting material;
-5. optional knowledge or examples when needed.
+**Repository and runtime context** includes local instructions, code,
+configuration, current state, and task evidence. It remains owned by the active
+repository or work system.
 
-This loading order is advisory, not a vendor-specific protocol. An adapter can
-translate it into imports, include directives, symlinks, or generated
-instructions, but the canonical Markdown remains vendor-neutral.
+**Overlays** contain durable user, organization, environment, or project facts.
+They should be versioned separately when versioning is appropriate. Core
+playbooks may request relevant context but cannot assume a specific overlay
+layout.
 
-## Scaling to hundreds of documents
+**Extensions** provide specialized policies, knowledge, heuristics, or playbooks
+for a technology or workflow. Extensions depend on the core, never the reverse.
 
-Each directory README is both a boundary contract and a curated index. When a
-directory becomes difficult to scan, split it by domain or lifecycle rather
-than by arbitrary document counts. Every new child directory receives its own
-README and appears in its parent's index.
+**Adapters** map the loading model to a named agent product. They may select and
+package canonical documents, but cannot duplicate or alter their semantics.
 
-Cross-cutting discovery should rely on stable relative links and the document
-metadata described in [`content-model.md`](content-model.md). A future generated
-catalog may read that metadata, but generated navigation must supplement rather
-than replace local READMEs. This preserves usefulness in a plain file browser.
+No overlay, extension, or adapter directory is created in core until the
+repository owns a real implementation. Empty integration taxonomy would add
+navigation cost without capability.
 
-Large subjects should use a hub document that explains scope and links to
-focused documents. A hub is not permission to duplicate their contents.
+## Loading and scale
 
-## Optional extension directories
+Every directory README is a curated index and boundary summary. At 500
+documents, discovery remains local: start at the root, select a layer, then
+select one relevant document. An integration may build a generated catalog, but
+the repository must remain navigable without it.
 
-These directories are part of the architectural vocabulary but are not created
-until substantive content exists:
+Create a child directory only when a stable subject boundary is more useful
+than a flat catalog. File count alone is not a boundary. A child directory must
+contain substantive material, have a README, and appear in its parent index.
 
-- `knowledge/`: durable technical or domain explanations used by several
-  playbooks. It must not contain instructions masquerading as reference notes.
-- `examples/`: complete, reviewed examples that demonstrate desired decisions
-  or outputs. Fragments such as "Yesterday: ..." are not examples.
-- `adapters/`: thin integrations for named agent products. Adapters may point to
-  canonical content but must not fork it.
-- `schemas/`: machine-readable contracts used by actual validation or
-  generation tooling.
-- `tools/`: scripts that validate, index, package, or publish AlexOS.
-- `decisions/`: architecture decision records when decisions become numerous
-  enough that a chronological log improves maintenance.
+## Invariants
 
-Creating an optional directory requires its first real artifact, a detailed
-README defining its boundary, and links from the root and relevant parent
-indexes.
-
-## Architectural invariants
-
-- There is one canonical source for every rule.
-- Vendor adapters never own universal behavior.
-- Context configures behavior but cannot silently redefine policy.
-- Playbooks have triggers and outcomes; policies have constraints.
-- Every directory is navigable without a proprietary tool.
-- Empty taxonomy is forbidden.
-- Moving a document includes updating all inbound links.
+- Every document has one canonical responsibility.
+- Every normative rule has one canonical owner.
+- Dependency direction is stable and acyclic.
+- Core contains no user, project, vendor, or technology assumptions.
+- Runtime evidence is not committed as permanent framework truth.
+- Every existing directory has a maintained README.
+- Structural rules are validated where objective validation is possible.

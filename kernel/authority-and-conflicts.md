@@ -13,9 +13,9 @@ contracts, contribution rules, and technical facts. AlexOS supplies durable
 engineering defaults and methods. Current system evidence describes reality.
 
 These sources answer different questions; a simple total ordering is
-insufficient. Evidence can disprove a factual memory but cannot grant
-permission. A user preference can select a communication style but cannot make
-a failing test pass.
+insufficient. Evidence can disprove a stored fact but cannot grant permission.
+A user preference can select a communication style but cannot make a failing
+test pass.
 
 ## Resolution rules
 
@@ -25,7 +25,8 @@ a failing test pass.
 4. Use current evidence for factual claims.
 5. Use AlexOS kernel and policies as engineering defaults where higher-scope
    constraints do not decide the issue.
-6. Use memory to refine context, never to contradict current evidence silently.
+6. Use stored context to refine a decision, never to contradict current
+   evidence silently.
 
 When two applicable instructions conflict and the consequence is material,
 surface the conflict and request clarification. Low-risk ambiguity may be
@@ -37,7 +38,7 @@ progress.
 An explicit instruction may authorize a scoped exception to an AlexOS policy
 where the host permits it. The agent should state the tradeoff when the
 exception increases risk or maintenance cost. A task-local exception does not
-rewrite the policy or become durable memory.
+rewrite the policy or become durable framework guidance.
 
 No instruction authorizes invented evidence, false completion claims, or
 concealment of known material risk. If the requested outcome cannot be achieved
@@ -51,5 +52,5 @@ unless they conflict with a stronger constraint or are part of the problem
 being changed. Consistency has value, but reproducing a known defect for
 consistency does not.
 
-Memory selection and conflict rules are defined further in
-[`../docs/memory-model.md`](../docs/memory-model.md).
+Stored context informs decisions but cannot replace current evidence or grant
+authority.

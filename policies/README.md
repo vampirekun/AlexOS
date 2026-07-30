@@ -1,49 +1,26 @@
-# Policies
+# Engineering policies
 
-Policies define cross-cutting constraints and quality bars that apply across
-multiple workflows. They refine the kernel without turning it into a catalog of
-special cases.
+Policies define mandatory constraints shared by more than one task. They refine
+the kernel without prescribing a complete workflow.
 
-## Why this directory exists
+## Contains
 
-A mature engineering system needs rules that are broader than one playbook but
-more specific than universal operating principles. Giving those rules a
-separate layer makes them reusable, independently reviewable, and selectively
-loadable according to the work's risks.
+- [`communication.md`](communication.md) — requirements for truthful,
+  decision-useful engineering communication.
 
-## What belongs here
+## Excludes
 
-- Communication, security, testing, compatibility, or documentation standards
-  that constrain several playbooks.
-- Decision rules with a clearly stated scope.
-- Quality gates that can be checked across different artifact types.
-- Exceptions that are universal to a domain and not tied to one project.
+- Universal behavior already owned by the kernel.
+- Explanatory models and conditional heuristics.
+- Ordered task procedures.
+- User preferences, project exceptions, and product-specific conventions.
 
-Current policy:
+## Selection and dependency
 
-- [`communication.md`](communication.md) governs engineering communication
-  across reports, tickets, reviews, and documentation.
+Load a policy when its scope covers the task or artifact. Policies depend on the
+kernel and may make its principles more specific, but they cannot weaken them.
+Task procedures depend on policies, never the reverse.
 
-As policies grow, group them by stable concern such as `code-quality/`,
-`delivery/`, or `security/`, not by agent vendor or current team. Create a child
-directory only under the admission rules in
-[`../docs/evolution.md`](../docs/evolution.md#adding-a-directory).
-
-## What must never belong here
-
-- The universal mission or lifecycle; use
-  [`../kernel/`](../kernel/README.md).
-- Ordered procedures triggered by a task; use
-  [`../playbooks/`](../playbooks/README.md).
-- Personal preferences or project exceptions; use
-  [`../context/`](../context/README.md).
-- Explanatory technology references; introduce `knowledge/` under
-  [`../docs/architecture.md`](../docs/architecture.md#optional-extension-directories).
-- Rules copied from another policy. Select one canonical owner and link to it.
-
-## Selection and precedence
-
-Load policies based on the artifact, risk, and playbook involved. Playbooks
-should link to their mandatory policies. Context can request stricter behavior
-but cannot silently weaken a policy. The kernel remains authoritative when a
-policy conflicts with an operating principle.
+A new policy requires a cross-cutting normative reason. Repeated advice does not
+become policy merely because it appears in several documents; first determine
+whether those copies should instead depend on one model or heuristic.

@@ -28,6 +28,6 @@ critical, and a well-managed boundary change may be safe. Familiarity can also
 hide boundaries: configuration formats, metrics, and operational procedures are
 contracts even when a type system cannot see them.
 
-Use the heuristic to ask better questions, not to avoid analysis. Normative
-requirements remain in the [`change safety policy`](../../policies/change-safety.md)
-and [`verification policy`](../../policies/verification.md).
+Use the heuristic to ask better questions, not to avoid analysis. The
+[`change risk model`](../knowledge/change-risk-model.md) provides the broader
+descriptive model.

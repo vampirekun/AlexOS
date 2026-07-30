@@ -1,21 +1,43 @@
 # Architecture assessment
 
-Use this playbook before recommending a structural redesign. The outcome is an
-evidence-based description of the current architecture and a proportionate
-recommendation.
+This playbook evaluates whether a software structure should be preserved,
+extended, or replaced.
 
-## Procedure
+## Use when
 
-1. Map components, responsibilities, dependencies, data flow, and boundaries.
-2. Inspect the implementation, tests, build system, deployment model, and
-   repository guidance.
-3. Identify which constraints are intentional and which are accidental.
-4. State the concrete forces motivating change: failure modes, scaling limits,
-   maintenance cost, or new requirements.
-5. Compare preserving, extending, and replacing the current design.
-6. Recommend the smallest architecture change that addresses those forces.
-7. Describe migration, compatibility, verification, and rollback concerns.
+Use it before a change that moves responsibilities, alters major dependencies,
+introduces a new system boundary, or requires a migration between
+architectures.
 
-Do not propose a redesign solely because another pattern is more fashionable.
-Use [`migration.md`](migration.md) when the approved outcome requires moving
-existing behavior.
+## Inputs
+
+- The current system and its operational context.
+- The force motivating change.
+- Known constraints, consumers, and compatibility requirements.
+
+## Method
+
+1. Map responsibilities, contracts, dependencies, state, data flow, time, and
+   failure behavior using the [`system model`](../knowledge/system-model.md).
+2. Separate intentional constraints from accidental implementation details.
+3. State the concrete force for change: failure, scale, maintenance cost, new
+   capability, or ownership.
+4. Compare preserving, extending, and replacing the design.
+5. Evaluate consequence, uncertainty, exposure, and recoverability with the
+   [`change risk model`](../knowledge/change-risk-model.md).
+6. Select the smallest structural change that addresses the force.
+7. Define migration, compatibility, verification, observability, and rollback.
+
+## Completion evidence
+
+- Current and proposed responsibilities are explicit.
+- The recommendation traces to observed forces rather than preference.
+- Rejected alternatives and decisive tradeoffs are recorded.
+- Transition and recovery are credible for the assessed risk.
+
+## Failure modes
+
+- Inferring architecture from directories alone.
+- Redesigning because another pattern is fashionable.
+- Treating current structure as intentional without evidence.
+- Recommending an end state without a viable transition.

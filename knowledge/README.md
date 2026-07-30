@@ -1,48 +1,30 @@
 # Engineering knowledge
 
-This directory contains durable explanatory models used to reason about
-software systems. Knowledge explains how to see a problem; policies constrain
-decisions, and playbooks prescribe a procedure.
+This directory contains reusable explanatory models for understanding software
+systems. Knowledge describes; it does not require an action or prescribe a task
+sequence.
 
-## Why this directory exists
+## Contains
 
-An engineering operating system needs more than rules. Agents also need stable
-conceptual models for understanding systems, changes, and failures. Embedding
-those models inside individual playbooks duplicates reasoning and makes it
-difficult to improve the model independently.
+- [`system-model.md`](system-model.md) — responsibilities, contracts, state,
+  time, failure, and operational behavior.
+- [`change-risk-model.md`](change-risk-model.md) — consequence, uncertainty,
+  exposure, and recoverability.
 
-## What belongs here
+## Excludes
 
-- Technology-independent models of software behavior and change.
-- Definitions and distinctions reused across policies or playbooks.
-- Explanations of tradeoffs, failure modes, and related concepts.
-- Durable technical knowledge expected to remain useful across projects.
+- Mandatory constraints.
+- Conditional rules of thumb.
+- Task procedures.
+- Language, framework, vendor, user, or project reference material.
+- Facts whose validity depends on current runtime state.
 
-Current knowledge:
+## Dependency rule
 
-- [`system-model.md`](system-model.md) defines the dimensions used to understand
-  an unfamiliar software system.
-- [`change-risk-model.md`](change-risk-model.md) defines how consequence,
-  uncertainty, exposure, and recoverability shape engineering risk.
+Knowledge may refer to other knowledge documents. It does not depend on the
+policies, heuristics, or playbooks that consume it. Consumers link to the model
+they use, preserving one-way dependency direction.
 
-## What must never belong here
-
-- Mandatory requirements; use [`../policies/`](../policies/README.md).
-- Ordered task procedures; use [`../playbooks/`](../playbooks/README.md).
-- User, environment, or project facts; use [`../memory/`](../memory/README.md).
-- Conditional rules learned from experience; use
-  [`../memory/heuristics/`](../memory/heuristics/README.md).
-- Vendor documentation copied for convenience.
-- Facts likely to decay without a clear ownership and review mechanism.
-
-## Organization and use
-
-Load knowledge documents when their model is needed for the current decision;
-they are not startup instructions. As the corpus grows, group documents by
-stable engineering concern such as systems, change, reliability, or delivery.
-Each child directory must have a boundary README and must be indexed here.
-
-Knowledge is descriptive, not authoritative merely because it is durable.
-Current system evidence can reveal that a model does not fit. Improvements
-follow the document quality rules in
-[`../docs/content-model.md`](../docs/content-model.md).
+Add a knowledge document only when its model is reusable and materially
+improves reasoning. A collection of facts without a stable explanatory model
+does not justify framework inclusion.

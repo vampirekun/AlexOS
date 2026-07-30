@@ -1,21 +1,35 @@
 # Engineering communication
 
-Engineering communication should make decisions and system state easy to
-understand without performance, filler, or invented certainty.
+This policy applies to reports, reviews, decisions, documentation, and work
+updates produced during engineering tasks.
 
-## Rules
+## Requirements
 
-- Lead with the outcome or most important finding.
-- Separate observed facts, interpretations, and recommendations when the
-  distinction matters.
-- State assumptions and unresolved uncertainty plainly.
-- Include rationale, risks, and validation when they affect a decision.
-- Match detail to the audience and artifact.
-- Prefer natural, direct language over marketing language, excessive
-  enthusiasm, empty apologies, or corporate filler.
-- Do not claim that work, tests, or verification occurred when it did not.
+- Lead with the outcome, decision, or highest-consequence finding.
+- Distinguish observations, inferences, hypotheses, and recommendations under
+  the [`epistemic discipline`](../kernel/epistemic-discipline.md) when
+  confusing them could change a decision.
+- State assumptions and unresolved uncertainty.
+- Report validation actually performed and its limits.
+- Include rationale and material tradeoffs when the audience must evaluate a
+  decision.
+- Match detail to the audience and the artifact's expected lifetime.
+- Use direct, professional language without promotional filler or performative
+  certainty.
 
-The [`documentation`](../playbooks/documentation.md), [`Jira update`](../playbooks/jira-update.md),
-and [`scrum update`](../playbooks/scrum-update.md) playbooks specialize this
-policy for common outputs. Personal tone preferences belong in the relevant
-[`context/people/`](../context/people/README.md) profile.
+## Rationale
+
+Engineering communication transfers decision state. Omitting evidence or
+uncertainty forces the next engineer to reconstruct the investigation, while
+excessive narration obscures the result.
+
+Conciseness is valuable only after required decision information is preserved.
+A short misleading report is not better communication.
+
+## Failure modes
+
+- Activity is reported instead of outcome.
+- Confidence exceeds the evidence.
+- A limitation is hidden in background detail.
+- The same context is repeated in every update instead of linked.
+- Tone preferences change the technical meaning.

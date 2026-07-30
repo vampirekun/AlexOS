@@ -1,105 +1,89 @@
 # Content model
 
-This document defines the contract for AlexOS Markdown. It keeps a large
-knowledge system consistent without forcing every document into a rigid
-template.
+This document defines the contract for files and indexes in AlexOS. Layer
+semantics belong to [`architecture.md`](architecture.md); change procedures
+belong to [`evolution.md`](evolution.md).
 
-## Document responsibilities
+## One responsibility
 
-Every document must have one primary responsibility that can be stated in a
-sentence. Its title and path should make that responsibility predictable. If a
-document mixes universal principles, project facts, and a task sequence, split
-it according to the layer model in [`architecture.md`](architecture.md).
+Every document must have one responsibility expressible in one sentence. Its
+path and title should make that responsibility predictable. A document that
+mixes a rule, explanatory model, task procedure, and installation fact must be
+split because those parts have different owners and lifecycles.
 
-A production document should provide enough context to be useful when reached
-through a direct link. It should not assume that an agent loaded the entire
-repository.
+Documents must remain understandable when reached directly. They may depend on
+explicitly linked lower layers but cannot assume that the entire repository was
+loaded.
 
-## Required properties
+## Required structure
 
-Every non-README Markdown document must have:
+Every Markdown document has:
 
-- one level-one title;
-- an opening paragraph that states purpose or scope;
-- explicit links for dependencies that affect interpretation;
-- headings that expose its structure to both people and agents;
-- no unresolved placeholders, ellipses standing in for content, or empty
-  sections.
+- exactly one level-one heading;
+- an opening paragraph defining purpose or scope;
+- headings that expose its major concepts;
+- relative links for internal references;
+- no empty sections, unresolved placeholders, or implied missing content.
 
-Playbooks additionally define a trigger, intended outcome, prerequisites or
-inputs when relevant, a procedure, and verification. Policies state their scope
-and the constraints they impose. Context documents identify the subject whose
-facts they describe.
+Layer-specific requirements:
 
-YAML front matter is not currently required. It should be introduced only when
-real tooling consumes it; decorative metadata quickly becomes stale. If that
-time comes, define one schema in `schemas/` and migrate the corpus
-systematically.
+- Policies define scope, rules, rationale, tradeoffs, and failure modes.
+- Knowledge documents define a model, its use, and its limits.
+- Heuristics define applicability, benefit, and counterexamples.
+- Playbooks define when to use them, inputs, method, completion evidence, and
+  failure modes.
+
+Metadata is not required until a real consumer needs it. Decorative metadata
+becomes another stale source of truth.
 
 ## Directory READMEs
 
-Every directory has a README once the directory exists. It must explain:
+Every existing directory has a `README.md` that provides:
 
-- why the directory exists;
-- what belongs there;
-- what must never belong there;
-- how its contents are organized and selected;
-- links to its current documents and relevant neighboring layers.
+- the directory's single responsibility;
+- a catalog of current contents;
+- explicit exclusions;
+- selection or maintenance rules.
 
-A README is an interface, not a dumping ground. Operational rules belong in
-their canonical documents and are summarized, not duplicated, in indexes.
+The README summarizes boundaries from
+[`architecture.md`](architecture.md); it does not redefine them. Every
+non-README document in a directory must appear in that directory's catalog.
 
 ## Naming
 
 - Use lowercase `kebab-case.md` for documents.
-- Use `README.md` for directory indexes.
-- Prefer descriptive nouns for policies and context, and task names for
-  playbooks.
-- Avoid ordering prefixes such as `01-` unless sequence is intrinsic and
-  permanent.
-- Do not put model, vendor, or editor names in canonical filenames unless the
-  file is inside a vendor adapter.
-- Choose paths for long-term meaning, not the current team structure.
+- Reserve `README.md` for directory indexes.
+- Name policies and knowledge by subject.
+- Name heuristics by the signal or inference they express.
+- Name playbooks by the task they perform.
+- Use sequence prefixes only when chronology is part of the document's
+  identity.
+- Keep vendor and technology names out of core filenames.
 
-## Linking and references
+## References
 
-Use relative links so a clone remains self-contained. Link to the canonical
-document instead of copying paragraphs. Use descriptive link text rather than
-"here." Link to a directory's README when referring to the directory as a
-concept.
+Link from a consumer to its dependency. A playbook may link to a policy or
+knowledge model; a knowledge model should not link back to every playbook that
+uses it.
 
-External links are appropriate for authoritative source material, but AlexOS
-must not depend on a volatile external page for a core operating rule. Record
-the locally relevant conclusion and cite the source where provenance matters.
+Use links rather than copied rules. A short orientation summary is acceptable
+when it cannot be edited to change the referenced rule's meaning.
 
-## Duplication and composition
+External sources may establish provenance, but a core operating rule cannot
+depend on an unstable external page for its interpretation.
 
-Some repetition for orientation is acceptable; repeated rules are not. A
-document may summarize another layer in one sentence and link to it. If two
-documents could independently be edited to change the same rule, the design has
-created competing sources of truth.
+## Examples
 
-Prefer composition:
+An example must be complete enough to demonstrate a decision or outcome.
+Sentence fragments and ellipses are placeholders, not examples. Examples
+should be introduced only when they clarify material that remains ambiguous
+after the rule or procedure is stated.
 
-- a playbook links to applicable policies;
-- context supplies project-specific commands or constraints;
-- knowledge explains a technology;
-- an adapter points the agent toward the canonical entry path.
+## Review questions
 
-## Quality gate
-
-Before accepting a document:
-
-1. Classify it using the placement decision in
-   [`architecture.md`](architecture.md#placement-decision).
-2. Confirm it contains substantive, current material.
-3. Search for an existing canonical home and extend or link instead of
-   duplicating.
-4. Add it to its directory README.
-5. Validate relative links and heading targets.
-6. Check that moving or removing it does not strand inbound references.
-7. Review whether its scope leaks vendor-specific or project-specific details
-   into a stable layer.
-
-Deprecated material follows [`evolution.md`](evolution.md); it is not left
-unmarked beside active guidance.
+- Does the path match the document's responsibility?
+- Does another document own the same rule or explanation?
+- Does every internal link follow the allowed dependency direction?
+- Is the material reusable across projects and agent products?
+- Does the local README list the document?
+- Could the document be removed without making an unrelated layer incomplete?

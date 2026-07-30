@@ -1,24 +1,43 @@
 # Code review
 
-Use this playbook to evaluate a proposed change. The outcome is a prioritized
-set of actionable findings grounded in the changed behavior and repository
-context.
+This playbook evaluates a proposed change for defects and material engineering
+risk.
 
-## Procedure
+## Use when
 
-1. Understand the change's intent and inspect the complete relevant diff.
-2. Read surrounding code, tests, and local conventions where the diff alone is
-   ambiguous.
-3. Check correctness, failure behavior, security, compatibility, and data
-   integrity.
-4. Check maintainability, unnecessary complexity, duplication, and consistency
-   with existing abstractions.
-5. Verify that tests cover meaningful changed behavior and important failure
-   paths.
-6. Report only findings the author can act on; include location, consequence,
-   and a practical correction.
-7. Distinguish blocking defects from optional improvements and summarize
-   residual risk.
+Use it for a diff, commit, or pull request whose behavior and consequences must
+be reviewed before acceptance.
 
-Absence of a finding is not proof that the code was executed. Apply the
-[`communication policy`](../policies/communication.md) when writing the review.
+## Inputs
+
+- The change and its stated intent.
+- Relevant surrounding code, tests, contracts, and repository rules.
+- Available validation evidence.
+
+## Method
+
+1. Establish the intended behavior and inspect the complete relevant diff.
+2. Read surrounding code when the diff does not establish ownership or
+   contracts.
+3. Check correctness, failure behavior, security boundaries, data integrity,
+   compatibility, and operational effects.
+4. Use the [`change risk model`](../knowledge/change-risk-model.md) to direct
+   attention beyond diff size.
+5. Evaluate tests against changed behavior and important failure paths.
+6. Report actionable findings with location, consequence, and correction.
+7. Separate blocking defects from optional improvements and describe residual
+   risk under the [`communication policy`](../policies/communication.md).
+
+## Completion evidence
+
+- Every reported finding is supported by the reviewed change and context.
+- Severity follows consequence rather than reviewer preference.
+- Important unreviewed or unexecuted areas are explicit.
+- Absence of findings is not represented as proof of correctness.
+
+## Failure modes
+
+- Reviewing style while missing behavior.
+- Reporting hypothetical problems without a reachable failure path.
+- Demanding a redesign unrelated to the change.
+- Treating passing tests as complete behavioral proof.

@@ -1,4 +1,4 @@
-# Find the earliest incorrect state
+# Earliest incorrect state
 
 When failures propagate through a system, the earliest observable divergence
 from expected state is usually more diagnostic than the final error.
@@ -27,6 +27,5 @@ Instrumentation gaps, nondeterminism, clock skew, and distributed causality can
 hide earlier events. Tracing backward indefinitely can also waste time when a
 bounded mitigation is operationally urgent.
 
-Use this heuristic within the
-[`debugging playbook`](../../playbooks/debugging.md), which defines evidence and
-verification requirements.
+Use the heuristic to select the next observation, not to declare a cause. The
+earliest visible divergence can still be downstream from the responsible event.

@@ -1,85 +1,63 @@
-# Evolution and governance
+# Evolution
 
-AlexOS evolves like a software system: changes should preserve clear contracts,
-avoid parallel implementations, and remain reversible when uncertainty is high.
+This document governs changes to AlexOS. It owns migration and deprecation
+procedures; document structure and layer boundaries are defined elsewhere.
 
 ## Change classes
 
-### Content correction
+A **correction** fixes accuracy without changing responsibility or consumer
+expectations. Update the canonical document and validate references.
 
-A correction improves accuracy without changing a document's responsibility or
-consumer expectations. Update the canonical document and verify its links.
+An **addition** introduces a reusable rule, model, heuristic, or procedure.
+Classify it with [`architecture.md`](architecture.md#placement-decision), prove
+that existing content does not own it, and add it to the local catalog.
 
-### Content addition
+A **structural change** moves responsibility, changes dependency direction, or
+creates or removes a directory. It requires a migration map and a complete
+reference update in the same change.
 
-An addition introduces a new rule, procedure, fact, or explanation. Classify it
-with [`architecture.md`](architecture.md#placement-decision), confirm it is not
-a duplicate, then add it to the local README.
+An **integration change** affects an external overlay, extension, or adapter.
+It cannot modify core semantics solely for one product's convenience.
 
-### Structural change
+## Adding structure
 
-A structural change creates, removes, renames, or redefines a directory or
-moves responsibilities between layers. Document the rationale and migration
-map in the change review. Update the root map, affected READMEs, and every
-inbound link in the same change.
+Create a directory only when substantive content needs a lifecycle or selection
+boundary that existing directories cannot express. The change must include real
+content, a README, a parent-catalog entry, and migration of existing material
+that already belongs there.
 
-### Integration change
-
-An integration change affects how a particular agent consumes AlexOS. It must
-remain thin and must not alter canonical semantics for the convenience of one
-vendor. If the integration exposes a missing universal concept, change the
-canonical layer first and adapt it second.
-
-## Adding a directory
-
-Create a directory only when at least one substantive document needs a boundary
-that the existing architecture cannot express cleanly. The same change must
-include:
-
-- the real document that justified the directory;
-- a README satisfying [`content-model.md`](content-model.md#directory-readmes);
-- a link from the parent README;
-- a statement of dependency direction and selection rules;
-- migration of any content that already belongs there.
-
-Empty directories and speculative category trees are architectural debt, not
-future-proofing.
+File count alone does not justify hierarchy. Empty directories and speculative
+category trees increase navigation cost without improving ownership.
 
 ## Moving or splitting content
 
-First identify the canonical meaning being preserved. Search for inbound links
-and duplicated phrases, move or split the content, then repair references.
-Where external consumers may use an old path, an adapter or release process may
-provide a compatibility redirect; do not retain a second editable copy.
+Identify the canonical responsibility before moving a document. Search inbound
+references, move or split the content, update indexes and links, then remove the
+old editable copy.
 
-When a mixed document is split, each resulting document must be independently
-coherent and the former relationships must become explicit links.
+Compatibility redirects are appropriate only for released paths with known
+external consumers. Version control is sufficient history for internal drafts.
 
-## Deprecation and removal
+## Deprecation
 
-Material should be deprecated when consumers need transition time; otherwise
-remove obsolete guidance as part of the replacing change. A deprecated document
-must state:
+Deprecate rather than remove when consumers need transition time. A deprecated
+document states:
 
-- that it is deprecated;
-- what supersedes it;
-- why it changed;
-- when it can be removed, if known.
+- its replacement;
+- why the responsibility moved or changed;
+- the transition required;
+- the removal condition, when known.
 
-Do not create an archive directory for content that version control already
-preserves. Keep historical material in the active tree only when it remains
-operationally relevant.
+Do not create an archive directory for material already preserved by version
+control.
 
-## Review checklist
+## Review sequence
 
-- Does the change keep universal behavior independent of vendors and projects?
-- Is each idea owned by one layer?
-- Are directory boundaries and local indexes still accurate?
-- Can an agent load only the relevant subset?
-- Are all new documents substantive and free of placeholders?
-- Are relative links valid?
-- Did the change remove obsolete paths and duplicated sources of truth?
-- Would the architecture still be understandable in a plain file browser?
-
-For document-level rules, also apply the quality gate in
-[`content-model.md`](content-model.md#quality-gate).
+1. Verify the framework boundary and dependency direction.
+2. Verify one canonical responsibility per document.
+3. Verify local catalogs and relative links.
+4. Run `python tools/validate.py`.
+5. Review semantic quality manually; structural validation cannot establish
+   correctness.
+6. Confirm that removed content remains owned by another system or is genuinely
+   obsolete.

@@ -18,7 +18,7 @@ not a problem statement.
 
 Inspect the relevant code, tests, documentation, history, configuration, runtime
 state, and prior implementations. Build the smallest adequate model of the
-system using [`../knowledge/system-model.md`](../knowledge/system-model.md).
+system.
 
 The stage is complete when material decisions can be tied to evidence and the
 remaining uncertainty is explicit. Investigation should stop when additional
@@ -47,9 +47,9 @@ result. It is not synonymous with editing files.
 ## 5. Verify
 
 Collect evidence that the outcome was achieved and important failure modes were
-not introduced. Match verification strength to the
-[`change risk model`](../knowledge/change-risk-model.md). Distinguish checks
-actually performed from checks merely recommended.
+not introduced. Match verification strength to consequence, uncertainty,
+exposure, and recoverability. Distinguish checks actually performed from checks
+merely recommended.
 
 The stage is complete when each material completion claim has supporting
 evidence or an explicit limitation.
@@ -60,8 +60,6 @@ Report the outcome first, then material decisions, evidence, tradeoffs, risks,
 and remaining work. Communication should enable another engineer to evaluate
 and continue the work without reconstructing the entire investigation.
 
-The [`communication policy`](../policies/communication.md) governs the form.
-
 ## Abbreviating the cycle
 
 Low-risk, well-understood work may compress all six stages into minutes.
@@ -69,5 +67,5 @@ High-consequence or uncertain work may require explicit artifacts and human
 review at several gates. Skipping a stage is acceptable only when its purpose is
 already satisfied; silence is not evidence that it was.
 
-Playbooks in [`../playbooks/`](../playbooks/README.md) specialize this cycle but
-cannot bypass the [`operating principles`](operating-principles.md).
+Task procedures may specialize this cycle but cannot bypass the
+[`operating principles`](operating-principles.md).

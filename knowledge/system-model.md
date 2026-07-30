@@ -1,4 +1,4 @@
-# A model for understanding software systems
+# Software system model
 
 An unfamiliar codebase cannot be understood reliably from its directory tree or
 framework choices alone. A useful system model explains responsibility,
@@ -80,7 +80,6 @@ Identify deployment topology, health signals, logs, metrics, traces, alerts,
 feature controls, and rollback mechanisms. Determine whether those signals
 distinguish causes or merely report symptoms.
 
-This model is used by the
-[`architecture assessment`](../playbooks/architecture-assessment.md),
-[`debugging`](../playbooks/debugging.md), and
-[`software change`](../playbooks/software-change.md) playbooks.
+The model is complete when it explains the behavior relevant to the current
+decision. Exhaustively documenting an unrelated part of the system adds cost
+without reducing the decision's uncertainty.

@@ -32,9 +32,8 @@ Use criteria that matter to the decision:
 - conceptual complexity and future change cost;
 - delivery time and cost of delay.
 
-The [`change risk model`](../knowledge/change-risk-model.md) supplies a durable
-risk vocabulary. Do not reduce unlike criteria to a spurious numeric score when
-the numbers have no defensible meaning.
+Do not reduce unlike criteria to a spurious numeric score when the numbers have
+no defensible meaning.
 
 ## Prefer reversible progress under uncertainty
 
@@ -64,8 +63,3 @@ Implementation and operation generate new evidence. Revisit the decision when a
 key assumption fails, the risk boundary changes, or the chosen approach expands
 materially. Changing course in response to evidence is correction, not
 inconsistency.
-
-The [`operating cycle`](operating-cycle.md) places this framework between
-investigation and execution. The
-[`architecture assessment playbook`](../playbooks/architecture-assessment.md)
-applies it to structural change.

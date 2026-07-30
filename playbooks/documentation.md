@@ -1,21 +1,43 @@
 # Documentation
 
-Use this playbook when creating or revising technical documentation. The outcome
-is an accurate, maintainable document that helps its intended reader make or
-execute a decision.
+This playbook creates or revises durable technical documentation.
 
-## Procedure
+## Use when
 
-1. Identify the audience, task, scope, and expected lifetime.
-2. Verify behavior against code, configuration, tests, or authoritative sources.
-3. Choose the document's canonical location and relationship to existing docs.
-4. Organize around reader decisions and workflows rather than the order in which
-   facts were discovered.
-5. Explain rationale and constraints where they prevent misuse.
-6. Add examples only when they are complete, realistic, and tested or clearly
-   marked as illustrative.
-7. Check terminology, commands, links, assumptions, and maintenance ownership.
+Use it when a reader needs a maintained explanation, procedure, decision, or
+reference rather than temporary task communication.
 
-Follow the [`communication policy`](../policies/communication.md). When editing
-AlexOS itself, also follow
-[`../docs/content-model.md`](../docs/content-model.md).
+## Inputs
+
+- Intended audience and decision or task.
+- Authoritative evidence for the documented behavior.
+- Existing documentation ownership and expected lifetime.
+
+## Method
+
+1. Define the reader, purpose, scope, and maintenance owner.
+2. Verify behavior against implementation, configuration, tests, or an
+   authoritative source.
+3. Select one canonical location and identify related documents.
+4. Organize around reader decisions rather than discovery order.
+5. Explain rationale, tradeoffs, and failure modes where they prevent misuse.
+6. Add an example only when it resolves ambiguity and can remain correct.
+7. Validate terminology, commands, assumptions, and links.
+8. Apply the [`communication policy`](../policies/communication.md).
+
+When the target is AlexOS, also apply the
+[`content model`](../docs/content-model.md).
+
+## Completion evidence
+
+- The intended reader can complete the task or evaluate the decision.
+- Material claims have a current source.
+- The document has one owner and does not duplicate another canonical rule.
+- Links and examples are valid.
+
+## Failure modes
+
+- Documenting intended behavior as if it were observed behavior.
+- Copying facts from an authoritative source and losing provenance.
+- Adding a second canonical explanation for convenience.
+- Writing a discovery transcript instead of a reader-oriented document.

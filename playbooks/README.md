@@ -1,63 +1,43 @@
-# Playbooks
+# Engineering playbooks
 
-Playbooks are repeatable operating procedures for recognizable engineering
-situations. Each one specializes the kernel's operating cycle toward a concrete,
-verifiable outcome.
+Playbooks are procedures selected by a recognizable task. They compose lower
+layers into a method that produces verifiable evidence.
 
-## Why this directory exists
+## Contains
 
-Task instructions need to evolve faster than universal principles and often
-apply only when a trigger is present. Keeping them here allows an agent to load
-one relevant workflow without absorbing every procedure in AlexOS.
+- [`software-change.md`](software-change.md) — general changes to an existing
+  software repository.
+- [`architecture-assessment.md`](architecture-assessment.md) — evaluation of a
+  structural change.
+- [`code-review.md`](code-review.md) — risk-focused review of a proposed
+  change.
+- [`debugging.md`](debugging.md) — causal investigation and correction of
+  unexpected behavior.
+- [`migration.md`](migration.md) — controlled movement between implementations
+  or contracts.
+- [`documentation.md`](documentation.md) — creation or revision of durable
+  technical documentation.
+- [`progress-reporting.md`](progress-reporting.md) — concise communication of
+  work state, direction, and impediments.
 
-## What belongs here
+## Excludes
 
-- Procedures with a clear trigger and intended outcome.
-- Investigation sequences and decision checkpoints.
-- Required inputs, evidence, and verification for a recurring task.
-- Links to policies that constrain the procedure.
-- Branches for common conditions within the same class of task.
+- Universal principles and cross-cutting policy.
+- Explanatory material with no task sequence.
+- Conditional shortcuts without a complete procedure.
+- Technology-, vendor-, organization-, or project-specific workflows.
+- Output templates without reasoning or completion criteria.
 
-Current playbooks:
+## Contract
 
-- [`software-change.md`](software-change.md) — general repository change work.
-- [`architecture-assessment.md`](architecture-assessment.md) — evaluating an
-  existing architecture before recommending change.
-- [`code-review.md`](code-review.md) — reviewing a change for actionable risk.
-- [`debugging.md`](debugging.md) — finding and correcting a root cause.
-- [`migration.md`](migration.md) — moving behavior between architectures while
-  preserving intended semantics.
-- [`kubernetes-troubleshooting.md`](kubernetes-troubleshooting.md) — diagnosing
-  Kubernetes workloads using cluster evidence.
-- [`documentation.md`](documentation.md) — producing maintainable technical
-  documentation.
-- [`jira-update.md`](jira-update.md) — communicating work state in a ticket.
-- [`scrum-update.md`](scrum-update.md) — communicating daily progress and
-  blockers.
+Every playbook defines:
 
-## What must never belong here
+- when it applies;
+- inputs needed to begin;
+- a method with decision points;
+- evidence that establishes completion;
+- common failure modes.
 
-- A universal behavioral rule with no task trigger; use
-  [`../kernel/`](../kernel/README.md) or
-  [`../policies/`](../policies/README.md).
-- Facts about a particular person, machine, organization, or repository; use
-  [`../context/`](../context/README.md).
-- A phrase intended to manipulate a specific model.
-- A one-line request such as "write good documentation." A playbook must contain
-  enough procedure and verification to guide work.
-- Complete sample outputs; future reviewed samples belong in `examples/` under
-  the criteria in
-  [`../docs/architecture.md`](../docs/architecture.md#optional-extension-directories).
-
-## Organization and growth
-
-Select playbooks by trigger, not by technology mentioned in the request. Use
-the general software-change playbook as a base when no specialized playbook
-fits. A specialized playbook should link to shared policies and knowledge
-rather than repeat them.
-
-When this list becomes crowded, introduce stable namespaces such as
-`delivery/`, `diagnostics/`, or `communication/`. Do not create a hierarchy
-based only on the current number of files. Every child directory must have a
-README and must be indexed here according to
-[`../docs/content-model.md`](../docs/content-model.md#directory-readmes).
+Select one primary playbook by task outcome. Supporting playbooks should be
+used only when the work crosses a real task boundary; chaining playbooks by
+default recreates an oversized universal workflow.

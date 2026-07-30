@@ -1,51 +1,30 @@
-# AlexOS documentation
+# System documentation
 
-This directory explains how AlexOS itself is designed, maintained, and evolved.
-It is the repository's control plane: the other directories contain operating
-knowledge, while `docs/` defines how that knowledge is organized.
+This directory governs AlexOS as a repository. It is read when maintaining,
+reviewing, or integrating the framework, not as part of an ordinary engineering
+task.
 
-## Why this directory exists
+## Contains
 
-Without explicit repository governance, a large Markdown system drifts into
-duplicated rules, ambiguous folders, broken navigation, and vendor-specific
-instructions. This directory makes architectural decisions discoverable and
-gives maintainers a consistent way to extend AlexOS.
+- [`architecture.md`](architecture.md) — content layers, dependency direction,
+  external composition, loading, and scale.
+- [`content-model.md`](content-model.md) — document responsibilities, naming,
+  linking, and local indexes.
+- [`information-lifecycle.md`](information-lifecycle.md) — treatment of facts,
+  runtime context, history, decisions, and promotion.
+- [`evolution.md`](evolution.md) — change classes, migrations, deprecation, and
+  review.
 
-## What belongs here
+## Excludes
 
-- Repository architecture and dependency rules.
-- The content model, naming rules, and document contracts.
-- Evolution, deprecation, and migration procedures for AlexOS.
-- Contributor guidance that applies to this repository as a product.
-- Architecture decisions about the knowledge system itself.
+- Engineering behavior and normative engineering constraints.
+- Explanatory models, heuristics, and task procedures.
+- User, project, environment, or runtime information.
+- Product-specific adapter instructions.
 
-Current documents:
+## Maintenance
 
-- [`architecture.md`](architecture.md) defines layers, dependencies, placement,
-  loading, and optional extension points.
-- [`content-model.md`](content-model.md) defines how documents and directory
-  indexes should be written and named.
-- [`evolution.md`](evolution.md) defines how to change the system without
-  accumulating incompatible conventions.
-
-## What must never belong here
-
-- General software-engineering guidance; use [`../kernel/`](../kernel/README.md),
-  [`../policies/`](../policies/README.md), or
-  [`../playbooks/`](../playbooks/README.md).
-- Facts about Alex, a workstation, customer, or codebase; use
-  [`../context/`](../context/README.md).
-- Agent-vendor setup instructions. When real integrations exist, place them in
-  an `adapters/` directory governed by
-  [`architecture.md`](architecture.md#optional-extension-directories).
-- Generated indexes or reports mixed with hand-maintained architecture. If
-  generation is introduced, give its outputs a clearly documented boundary.
-
-## Maintenance rules
-
-Documents here may describe all repository layers, but they must not silently
-override them. A structural rule that changes how agents operate must be
-reflected in the affected directory README and linked from the root
-[`README.md`](../README.md). Architectural changes follow
-[`evolution.md`](evolution.md), including link validation and migration of
-existing content.
+Each document in this directory owns one governance concern. Structural changes
+must update the architecture first, then migrate affected content and links in
+the same change. Historical copies are unnecessary because version control owns
+repository history.

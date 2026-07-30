@@ -1,24 +1,46 @@
 # Migration
 
-Use this playbook when moving existing behavior, data, or integration between
-architectures. The outcome is preserved intended behavior with explicit
-compatibility and verification.
+This playbook moves behavior, data, or consumers between implementations while
+controlling compatibility and recovery risk.
 
-## Procedure
+## Use when
 
-1. Establish the source behavior, consumers, contracts, and invariants.
-2. Map architectural differences between source and destination.
-3. Separate behavior that must be preserved from accidental implementation
-   details.
-4. Identify compatibility, sequencing, data, deployment, and rollback risks.
-5. Design incremental stages when a single cutover would make failures hard to
-   isolate or reverse.
-6. Implement translation at explicit boundaries rather than leaking both
-   architectures throughout the system.
-7. Verify behavioral equivalence, important failure paths, and operational
-   observability.
-8. Remove obsolete paths after consumers have transitioned; do not leave two
-   canonical implementations.
+Use it when source and destination must coexist, consumers must transition, or
+state must cross a boundary before the old path can be removed.
 
-Use [`architecture-assessment.md`](architecture-assessment.md) when the target
-architecture itself has not yet been justified.
+## Inputs
+
+- Source behavior, contracts, consumers, and invariants.
+- Destination behavior and architectural differences.
+- Sequencing, compatibility, data, deployment, and rollback constraints.
+
+## Method
+
+1. Establish the behavior that must be preserved and the evidence that defines
+   it.
+2. Map source and destination with the
+   [`system model`](../knowledge/system-model.md).
+3. Separate contractual behavior from accidental implementation detail.
+4. Evaluate irreversible effects and mixed-version exposure using the
+   [`change risk model`](../knowledge/change-risk-model.md).
+5. Divide the transition into independently verifiable stages when a single
+   cutover would be difficult to diagnose or reverse.
+6. Keep translation at explicit boundaries rather than spreading both models
+   throughout the system.
+7. Verify equivalence, failure handling, observability, and recovery at each
+   stage.
+8. Remove the obsolete path after consumers have transitioned.
+
+## Completion evidence
+
+- Required behavior is preserved or approved differences are explicit.
+- Every stage has entry, verification, and recovery conditions.
+- No consumer depends on the retired path.
+- Obsolete compatibility code and operational procedures are removed.
+
+## Failure modes
+
+- Migrating implementation details without identifying contracts.
+- Assuming code rollback reverses data or external effects.
+- Leaving two canonical implementations indefinitely.
+- Designing the destination without an executable transition.

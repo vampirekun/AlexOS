@@ -1,66 +1,60 @@
 # AlexOS
 
-AlexOS is a portable operating system for AI-assisted software engineering. It
-separates durable engineering judgment from task procedures, local context, and
-tool integrations so that the same body of knowledge can be used by Codex,
-Claude Code, Cursor, Gemini CLI, or a future agent without rewriting its core.
+AlexOS is a portable framework for engineering agents. It provides a shared
+operating discipline without depending on a programming language, repository
+layout, agent product, or tool-specific instruction format.
 
-This repository is the canonical source. Agent-specific files may eventually
-load or adapt AlexOS, but they must not become competing sources of truth.
+The framework is deliberately smaller than the environment in which it runs.
+Project rules, user preferences, runtime observations, and technology-specific
+procedures remain owned by their source systems or by external extensions.
 
-## Start here
+## Framework map
 
-An agent or maintainer should read only what the current task requires:
-
-1. Read [`kernel/README.md`](kernel/README.md) to understand the invariant
-   mission, principles, and operating cycle.
-2. Read [`policies/README.md`](policies/README.md) and select policies that
-   constrain the work.
-3. Read [`context/README.md`](context/README.md) and load only the relevant
-   person, environment, or project context.
-4. Select a procedure from [`playbooks/README.md`](playbooks/README.md).
-5. Use [`docs/README.md`](docs/README.md) when maintaining AlexOS itself.
-
-This is progressive disclosure by design. Loading every document would waste
-context, blur priorities, and become increasingly harmful as the repository
-grows.
-
-## Repository map
-
-| Directory | Responsibility | Stability |
+| Layer | Responsibility | Load when |
 | --- | --- | --- |
-| [`kernel/`](kernel/README.md) | Universal identity, reasoning principles, and execution lifecycle | Highest |
-| [`policies/`](policies/README.md) | Cross-cutting rules and quality constraints | High |
-| [`playbooks/`](playbooks/README.md) | Triggered procedures for recurring engineering work | Medium |
-| [`context/`](context/README.md) | Replaceable facts about people, environments, and projects | Variable |
-| [`docs/`](docs/README.md) | Architecture and maintenance rules for AlexOS itself | High |
+| [`kernel/`](kernel/README.md) | Universal reasoning and execution semantics | Every engineering task |
+| [`policies/`](policies/README.md) | Cross-cutting constraints | The policy governs the task or artifact |
+| [`knowledge/`](knowledge/README.md) | Durable explanatory models | The model helps interpret the system |
+| [`heuristics/`](heuristics/README.md) | Conditional rules of thumb | Its applicability conditions are present |
+| [`playbooks/`](playbooks/README.md) | Procedures for recurring tasks | The task matches the playbook trigger |
+| [`docs/`](docs/README.md) | Governance of AlexOS itself | Maintaining or integrating the framework |
 
-The repository intentionally does not create empty top-level categories. New
-categories such as `knowledge/`, `adapters/`, `examples/`, `schemas/`, or
-`tools/` should appear only with their first production-quality artifact and an
-accompanying README. Their intended roles and admission criteria are documented
-in [`docs/architecture.md`](docs/architecture.md).
+These layers are not equal kinds of authority. The kernel defines universal
+behavior, policies constrain it, knowledge explains, heuristics suggest, and
+playbooks sequence work. The distinction is defined in
+[`docs/architecture.md`](docs/architecture.md).
 
-## Architectural rules
+## Loading
 
-- Organize by responsibility, not file format or model vendor.
-- Keep the kernel small; most additions belong elsewhere.
-- Store facts separately from instructions so facts can change without
-  rewriting behavior.
-- Write a playbook around a triggering situation and a verifiable outcome, not
-  around the wording of a prompt.
-- Keep one canonical home for each rule. Link to it instead of copying it.
-- Prefer relative Markdown links and plain text formats.
-- Treat directory READMEs as local interfaces: they define boundaries and
-  provide curated navigation.
-- Add structure in response to real content, not anticipated content.
+An integration should load the kernel first, then select only the policies,
+knowledge, heuristics, and playbook relevant to the current task. Loading the
+entire repository defeats the architecture: irrelevant guidance consumes
+attention and makes conflicts harder to detect.
 
-## How to change AlexOS
+AlexOS does not own the active repository's instructions or facts. Integrations
+compose those external inputs with the framework under the conflict rules in
+[`kernel/authority-and-conflicts.md`](kernel/authority-and-conflicts.md).
 
-Before adding or moving a document, follow the placement decision in
-[`docs/architecture.md`](docs/architecture.md) and the authoring contract in
-[`docs/content-model.md`](docs/content-model.md). For broader structural
-changes, use the evolution process in [`docs/evolution.md`](docs/evolution.md).
+## Portability
 
-AlexOS is not a single prompt, and this README is not a prompt template. It is
-the stable entry point into a versionable engineering knowledge system.
+Canonical documents use Markdown, relative links, and model-neutral language.
+An adapter may translate the loading model into a product's native mechanism,
+but it must not fork or redefine framework semantics. Technology-specific
+guidance belongs in an extension rather than the core.
+
+The framework boundary and extension rules are documented in
+[`docs/architecture.md`](docs/architecture.md#external-composition).
+
+## Maintaining AlexOS
+
+Repository changes follow:
+
+- [`docs/content-model.md`](docs/content-model.md) for document responsibilities,
+  naming, and references;
+- [`docs/information-lifecycle.md`](docs/information-lifecycle.md) for facts,
+  runtime context, history, and promotion;
+- [`docs/evolution.md`](docs/evolution.md) for structural changes, migration,
+  and deprecation.
+
+Run `python tools/validate.py` before proposing a change. The validator checks
+objective repository contracts; engineering quality still requires review.

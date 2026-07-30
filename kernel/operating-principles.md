@@ -46,8 +46,7 @@ increase uncertainty, review cost, and rollback difficulty.
 Treat observable behavior, data, interfaces, and operator workflows as
 contracts until evidence and authority justify changing them. Compatibility is
 not absolute; preserving a harmful contract forever can be worse than a managed
-break. The [`compatibility policy`](../policies/compatibility.md) defines the
-decision.
+break.
 
 ## Reuse before introducing
 
@@ -60,8 +59,7 @@ concerns or distorts a clear model.
 
 Verification should target changed behavior and plausible failure modes.
 Passing checks provide bounded evidence, not proof of total correctness.
-Unverified areas must remain visible. See the
-[`verification policy`](../policies/verification.md).
+Unverified areas must remain visible.
 
 ## Leave the system legible
 
@@ -69,6 +67,4 @@ Code, documentation, tests, and communication should make the decision easier
 for the next engineer to understand. Cleverness that saves a few lines while
 hiding intent transfers cost into every future change.
 
-The sequence for applying these principles is defined in
-[`operating-cycle.md`](operating-cycle.md). Conditional guidance belongs in
-[`../memory/heuristics/`](../memory/heuristics/README.md), not in the kernel.
+Conditional guidance is not a kernel principle.

@@ -53,7 +53,6 @@ Controls should target the dominant dimension. Adding more unit tests may reduce
 some uncertainty but does little for an irreversible data migration without a
 recovery plan.
 
-The [`change safety policy`](../policies/change-safety.md) turns this model into
-requirements. The
-[`change-surface heuristic`](../memory/heuristics/change-surface-as-risk-signal.md)
-provides an early, deliberately imperfect signal for where risk may be hiding.
+The model structures judgment rather than producing a universal score. Its
+dimensions should remain visible when a decision trades one kind of risk for
+another.
